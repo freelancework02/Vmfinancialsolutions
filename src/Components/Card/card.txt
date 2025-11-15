@@ -1,0 +1,137 @@
+/*
+ProfessionalServices - Gold & Light Variants
+
+Two polished, responsive component variants that use your logo's gold gradient and deep-navy brand color.
+- Variant 1 (GoldHero): dark/deep-navy accent with gold highlights and the hero image.
+- Variant 2 (LightCard): white/light background with subtle gold accents and cleaner cards.
+
+Both keep your original copy and image URLs intact. Replace the import paths for Logo/Hero if needed in your project.
+
+Usage: save as ProfessionalServicesVariants.jsx and import the variant you want:
+  import { ProfessionalServicesGold, ProfessionalServicesLight } from './ProfessionalServicesVariants.jsx'
+
+*/
+
+import React from 'react';
+import Logo from '../../assets/Logo/logo.png'; // adjust path if needed
+import HeroImg from '../../assets/Herosectionimg.png'; // adjust path if needed
+
+const GOLD_START = '#f7d88b';
+const GOLD_END = '#c9943b';
+const DEEP_NAVY = '#082a48';
+const NEUTRAL_TEXT = '#22313f';
+
+const services = [
+  {
+    title: 'Expertise',
+    description:
+      'Over ten years of experience. Clear insights, strategic roadmaps, and ongoing reviews that keep your goals on track.',
+    image:
+      'https://s3.us-east-1.amazonaws.com/cdn.s3.webcontentor.com/OFFICE/VMF01/site_design/images/card-img1.jpg',
+  },
+  {
+    title: 'Discretion',
+    description:
+      'Your privacy matters. We handle sensitive information with full confidentiality and secure data processes.',
+    image:
+      'https://s3.us-east-1.amazonaws.com/cdn.s3.webcontentor.com/OFFICE/VMF01/site_design/images/card-img2.jpg',
+  },
+  {
+    title: 'Dependability',
+    description:
+      'Consistent support, transparent updates, and a results-driven approach to your long-term well-being.',
+    image:
+      'https://s3.us-east-1.amazonaws.com/cdn.s3.webcontentor.com/OFFICE/VMF01/site_design/images/card-img3.jpg',
+  },
+  {
+    title: 'Consulting',
+    description:
+      'Cut through complexity. Focused strategy sessions that help you clarify goals and close financial gaps.',
+    image:
+      'https://s3.us-east-1.amazonaws.com/cdn.s3.webcontentor.com/OFFICE/VMF01/site_design/images/card-img4.jpg',
+  },
+  {
+    title: 'Sales',
+    description:
+      'Curated financial solutions that prioritize suitability, cost-efficiency, and long-term value.',
+    image:
+      'https://s3.us-east-1.amazonaws.com/cdn.s3.webcontentor.com/OFFICE/VMF01/site_design/images/card-img5.jpg',
+  },
+  {
+    title: 'Partnership',
+    description:
+      "If our philosophy aligns, we grow together—built on trust, shared standards, and mutual integrity.",
+    image:
+      'https://s3.us-east-1.amazonaws.com/cdn.s3.webcontentor.com/OFFICE/VMF01/site_design/images/card-img6.jpg',
+  },
+];
+
+
+// ---------------- Variant 2: LightCard ----------------
+export function ProfessionalServicesLight() {
+  return (
+    <section className="py-16 px-4 md:px-6 lg:px-12 bg-gradient-to-b from-white to-[#fffaf7]" aria-labelledby="services-light">
+      <div className="max-w-7xl mx-auto">
+       
+
+        <div className="text-center mb-8">
+          <h2 id="services-light" className="text-3xl md:text-4xl font-extrabold" style={{ color: DEEP_NAVY }}>Our Skills & Offers</h2>
+          <p className="mt-3 text-[#274f73] max-w-3xl mx-auto">Expertise you can trust — delivered with clarity, transparency, and long-term vision.</p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left column: large overview card */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-3xl p-6 shadow-md border" style={{ borderColor: 'rgba(3,43,85,0.04)' }}>
+              <img src={services[0].image} alt="overview" className="w-full h-48 object-cover rounded-xl mb-4" />
+              <h3 className="text-xl font-semibold" style={{ color: NEUTRAL_TEXT }}>{services[0].title}</h3>
+              <p className="mt-2 text-sm text-[#425a6e]">{services[0].description}</p>
+
+              <div className="mt-4 flex gap-2">
+                <a href="#" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-white font-semibold" style={{ background: `linear-gradient(90deg, ${GOLD_START}, ${GOLD_END})` }}>Get Started</a>
+                <a href="#" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border font-semibold" style={{ borderColor: 'rgba(3,43,85,0.06)', color: DEEP_NAVY }}>Contact</a>
+              </div>
+            </div>
+          </div>
+
+          {/* Right column: grid of cards */}
+          <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {services.slice(1).map((s, i) => (
+              <div key={i} className="bg-white rounded-2xl p-4 shadow-sm border hover:shadow-md transition-transform hover:-translate-y-1" style={{ borderColor: 'rgba(3,43,85,0.04)' }}>
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-xl flex-shrink-0 overflow-hidden">
+                    <img src={s.image} alt={s.title} className="w-full h-full object-cover" />
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold" style={{ color: DEEP_NAVY }}>{s.title}</h4>
+                    <p className="mt-1 text-sm text-[#32536f]">{s.description}</p>
+
+                    <div className="mt-3 flex items-center gap-3">
+                      <a href="#" className="text-sm font-semibold inline-flex items-center" style={{ color: GOLD_START }}>Get Started →</a>
+                      <a href="#" className="text-sm text-[#4b6b80]">Learn</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-12 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4 bg-white border" style={{ borderColor: 'rgba(3,43,85,0.04)' }}>
+          <div>
+            <h3 className="text-lg md:text-xl font-bold" style={{ color: NEUTRAL_TEXT }}>Want a quick, no-pressure review?</h3>
+            <p className="text-sm text-[#274f73] mt-1">Schedule a brief call — we’ll listen, assess, and suggest next steps.</p>
+          </div>
+
+          <div className="flex gap-3">
+            <a href="#" className="inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold text-white" style={{ background: `linear-gradient(90deg, ${GOLD_START}, ${GOLD_END})` }}>Book a Review</a>
+            <a href="#" className="inline-flex items-center gap-2 rounded-full px-5 py-3 border text-sm font-semibold bg-white" style={{ borderColor: 'rgba(3,43,85,0.06)', color: DEEP_NAVY }}>Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default ProfessionalServicesLight;
