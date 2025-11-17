@@ -72,7 +72,7 @@ export default function BlogVariantBUpdated() {
   const excerpt = (text = "", n = 140) => (String(text).length > n ? String(text).slice(0, n).trim() + "…" : text);
 
   return (
-    <section className="mt-12 md:mt-16">
+    <section className="mt-20 md:mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-6">

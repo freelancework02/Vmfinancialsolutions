@@ -119,9 +119,9 @@ export default function FoundationalCommitmentsGold() {
               onClick={(e) => {
                 e.preventDefault();
                 if (typeof window !== "undefined" && window.Calendly?.initPopupWidget) {
-                  window.Calendly.initPopupWidget({ url: "https://calendly.com/futurewesecure-info/30min" });
+                  window.Calendly.initPopupWidget({ url: "https://calendly.com/vmfinsolutions/financialneedanalysis" });
                 } else {
-                  window.open("https://calendly.com/futurewesecure-info/30min", "_blank", "noopener,noreferrer");
+                  window.open("https://calendly.com/vmfinsolutions/financialneedanalysis", "_blank", "noopener,noreferrer");
                 }
               }}
               className="inline-flex items-center gap-2 rounded-full px-4 py-2 font-medium shadow"
@@ -196,8 +196,8 @@ export default function FoundationalCommitmentsGold() {
                 <Mail className="w-5 h-5" style={{ color: GOLD_START }} />
                 <div className="text-sm text-black/85">
                   Still have questions? Email{" "}
-                  <a href="mailto:Info@futurewesecure.com" className="font-semibold" style={{ color: DEEP_NAVY }}>
-                    Info@futurewesecure.com
+                  <a href="mailto:info@vmfinancialsolutions.com" className="font-semibold" style={{ color: DEEP_NAVY }}>
+                  info@vmfinancialsolutions.com
                   </a>
                 </div>
               </div>

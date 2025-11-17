@@ -229,7 +229,7 @@ export default function BlogDetailVariantA() {
                   <div className="flex gap-3">
                     <button
                       onClick={() =>
-                        window.open(blog.meetingLink || "https://calendly.com/futurewesecure-info/30min", "_blank", "noopener,noreferrer")
+                        window.open(blog.meetingLink || "https://calendly.com/vmfinsolutions/financialneedanalysis", "_blank", "noopener,noreferrer")
                       }
                       className="inline-flex items-center gap-2 px-5 py-3 rounded-full font-semibold"
                       style={{
@@ -242,7 +242,9 @@ export default function BlogDetailVariantA() {
                     </button>
 
                     <button
-                      onClick={() => navigate("/contact")}
+                       onClick={() =>
+                        window.open(blog.meetingLink || "https://calendly.com/vmfinsolutions/financialneedanalysis", "_blank", "noopener,noreferrer")
+                      }
                       className="inline-flex items-center gap-2 px-4 py-3 rounded-full border font-medium"
                       style={{
                         borderColor: "rgba(2,20,45,0.06)",

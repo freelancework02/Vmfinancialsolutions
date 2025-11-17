@@ -332,7 +332,7 @@ export default function ContactSection() {
               <button
                 onClick={() =>
                   window.Calendly?.initPopupWidget?.({
-                    url: "https://calendly.com/futurewesecure-info/30min",
+                    url: "https://calendly.com/vmfinsolutions/financialneedanalysis",
                   })
                 }
                 className="mt-3 w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 font-semibold bg-white"

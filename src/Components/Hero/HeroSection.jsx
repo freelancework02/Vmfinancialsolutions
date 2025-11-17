@@ -53,9 +53,9 @@ export default function HeroImageEnhanced({ onBook = () => {} }) {
                         e.preventDefault();
                         onBook();
                         if (typeof window !== "undefined" && window.Calendly?.initPopupWidget) {
-                          window.Calendly.initPopupWidget({ url: "https://calendly.com/futurewesecure-info/30min" });
+                          window.Calendly.initPopupWidget({ url: "https://calendly.com/vmfinsolutions/financialneedanalysis" });
                         } else {
-                          window.open("https://calendly.com/futurewesecure-info/30min", "_blank", "noopener,noreferrer");
+                          window.open("https://calendly.com/vmfinsolutions/financialneedanalysis", "_blank", "noopener,noreferrer");
                         }
                       }}
                       className="rounded-full px-6 py-3 font-semibold shadow-sm"
@@ -130,9 +130,9 @@ export default function HeroImageEnhanced({ onBook = () => {} }) {
                         e.preventDefault();
                         onBook();
                         if (typeof window !== "undefined" && window.Calendly?.initPopupWidget) {
-                          window.Calendly.initPopupWidget({ url: "https://calendly.com/futurewesecure-info/30min" });
+                          window.Calendly.initPopupWidget({ url: "https://calendly.com/vmfinsolutions/financialneedanalysis" });
                         } else {
-                          window.open("https://calendly.com/futurewesecure-info/30min", "_blank", "noopener,noreferrer");
+                          window.open("https://calendly.com/vmfinsolutions/financialneedanalysis", "_blank", "noopener,noreferrer");
                         }
                       }}
                       className="px-4 py-2 rounded-full font-semibold"
@@ -141,7 +141,17 @@ export default function HeroImageEnhanced({ onBook = () => {} }) {
                       Book
                     </button>
 
-                    <a href="#contact" className="text-sm text-slate-600 self-center" onClick={(e) => e.preventDefault()}>
+                    <a href="#"  
+                    onClick={(e) => {
+                        e.preventDefault();
+                        onBook();
+                        if (typeof window !== "undefined" && window.Calendly?.initPopupWidget) {
+                          window.Calendly.initPopupWidget({ url: "https://calendly.com/vmfinsolutions/financialneedanalysis" });
+                        } else {
+                          window.open("https://calendly.com/vmfinsolutions/financialneedanalysis", "_blank", "noopener,noreferrer");
+                        }
+                      }}
+                       className="text-sm text-slate-600 self-center" >
                       Contact
                     </a>
                   </div>

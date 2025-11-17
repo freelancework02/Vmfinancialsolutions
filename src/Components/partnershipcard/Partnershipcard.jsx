@@ -70,7 +70,7 @@ export default function PartnerProgramGoldVariantEqualCards() {
     document.body.appendChild(s);
   }, []);
 
-  const openCalendly = (url = "https://calendly.com/futurewesecure-info/30min") => {
+  const openCalendly = (url = "https://calendly.com/vmfinsolutions/financialneedanalysis") => {
     if (typeof window === "undefined") return;
     if (window.Calendly?.initPopupWidget) {
       window.Calendly.initPopupWidget({ url });

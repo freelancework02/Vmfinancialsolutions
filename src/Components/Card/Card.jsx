@@ -113,13 +113,13 @@ export function ProfessionalServicesVariantB() {
                 </div>
 
                 <div className="mt-6 flex items-center justify-between gap-3">
-                  <a href="#" onClick={(e) => { e.preventDefault(); if (typeof window !== 'undefined' && window.Calendly?.initPopupWidget) { window.Calendly.initPopupWidget({ url: 'https://calendly.com/futurewesecure-info/30min' }); } else { window.open('https://calendly.com/futurewesecure-info/30min', '_blank', 'noopener,noreferrer'); } }}
+                  <a href="#" onClick={(e) => { e.preventDefault(); if (typeof window !== 'undefined' && window.Calendly?.initPopupWidget) { window.Calendly.initPopupWidget({ url: 'https://calendly.com/vmfinsolutions/financialneedanalysis' }); } else { window.open('https://calendly.com/vmfinsolutions/financialneedanalysis', '_blank', 'noopener,noreferrer'); } }}
                     className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-shadow shadow-sm" style={{ background: `linear-gradient(90deg, ${ACCENT_START}, ${ACCENT_END})`, color: '#08282a', boxShadow: '0 8px 26px rgba(217,88,0,0.08)' }} aria-label={`Get started with ${s.title}`}>
                     Get Started
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h12M12 5l7 7-7 7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
                   </a>
 
-                  <a href="#" onClick={(e) => { e.preventDefault(); if (typeof window !== 'undefined' && window.Calendly?.initPopupWidget) { window.Calendly.initPopupWidget({ url: 'https://calendly.com/futurewesecure-info/30min' }); } else { window.open('https://calendly.com/futurewesecure-info/30min', '_blank', 'noopener,noreferrer'); } }} className="text-sm text-[#235353] hover:text-[#0b2a32] transition" aria-label={`Learn more about ${s.title}`}>
+                  <a href="#" onClick={(e) => { e.preventDefault(); if (typeof window !== 'undefined' && window.Calendly?.initPopupWidget) { window.Calendly.initPopupWidget({ url: 'https://calendly.com/vmfinsolutions/financialneedanalysis' }); } else { window.open('https://calendly.com/vmfinsolutions/financialneedanalysis', '_blank', 'noopener,noreferrer'); } }} className="text-sm text-[#235353] hover:text-[#0b2a32] transition" aria-label={`Learn more about ${s.title}`}>
                     Learn more →
                   </a>
                 </div>
@@ -137,11 +137,11 @@ export function ProfessionalServicesVariantB() {
           </div>
 
           <div className="flex gap-3">
-            <a href="#" onClick={(e) => { e.preventDefault(); if (typeof window !== 'undefined' && window.Calendly?.initPopupWidget) { window.Calendly.initPopupWidget({ url: 'https://calendly.com/futurewesecure-info/30min' }); } else { window.open('https://calendly.com/futurewesecure-info/30min', '_blank', 'noopener,noreferrer'); } }} className="inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold" style={{ background: `linear-gradient(90deg, ${ACCENT_START}, ${ACCENT_END})`, color: '#08282a', boxShadow: '0 12px 36px rgba(217,88,0,0.08)' }}>
+            <a href="#" onClick={(e) => { e.preventDefault(); if (typeof window !== 'undefined' && window.Calendly?.initPopupWidget) { window.Calendly.initPopupWidget({ url: 'https://calendly.com/vmfinsolutions/financialneedanalysis' }); } else { window.open('https://calendly.com/vmfinsolutions/financialneedanalysis', '_blank', 'noopener,noreferrer'); } }} className="inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold" style={{ background: `linear-gradient(90deg, ${ACCENT_START}, ${ACCENT_END})`, color: '#08282a', boxShadow: '0 12px 36px rgba(217,88,0,0.08)' }}>
               Book a Review
             </a>
 
-            <a href="#" onClick={(e) => { e.preventDefault(); if (typeof window !== 'undefined' && window.Calendly?.initPopupWidget) { window.Calendly.initPopupWidget({ url: 'https://calendly.com/futurewesecure-info/30min' }); } else { window.open('https://calendly.com/futurewesecure-info/30min', '_blank', 'noopener,noreferrer'); } }} className="inline-flex items-center gap-2 rounded-full px-5 py-3 border text-sm font-semibold bg-white" style={{ borderColor: 'rgba(11,27,36,0.06)', color: SLATE }}>
+            <a href="#" onClick={(e) => { e.preventDefault(); if (typeof window !== 'undefined' && window.Calendly?.initPopupWidget) { window.Calendly.initPopupWidget({ url: 'https://calendly.com/vmfinsolutions/financialneedanalysis' }); } else { window.open('https://calendly.com/vmfinsolutions/financialneedanalysis', '_blank', 'noopener,noreferrer'); } }} className="inline-flex items-center gap-2 rounded-full px-5 py-3 border text-sm font-semibold bg-white" style={{ borderColor: 'rgba(11,27,36,0.06)', color: SLATE }}>
               Contact Us
             </a>
           </div>

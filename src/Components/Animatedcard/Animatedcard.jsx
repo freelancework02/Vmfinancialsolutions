@@ -135,7 +135,7 @@ export function HomeVariantA() {
             </div>
           </div>
 
-          <a href="#book" onClick={(e) => { e.preventDefault(); window.Calendly?.initPopupWidget?.({ url: 'https://calendly.com/futurewesecure-info/30min' }); }}
+          <a href="#book" onClick={(e) => { e.preventDefault(); window.Calendly?.initPopupWidget?.({ url: 'https://calendly.com/vmfinsolutions/financialneedanalysis' }); }}
             className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold shadow-md hover:shadow-lg transition-transform text-white"
             style={{ background: `linear-gradient(135deg, ${t.accentStart}, ${t.accentEnd})` }}>
             <Calculator className="w-5 h-5 mr-2" />
