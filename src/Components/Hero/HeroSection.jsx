@@ -1,38 +1,25 @@
 // File: HeroImageVariant.jsx
 import React, { useRef } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
-import heroImg from "../../assets/Herosec.png"; // <-- put your generated image here
+import heroImg from "../../assets/Herosec.png"; // replace with your image
 
 const ACCENT_START = "#f7d88b";
 const ACCENT_END = "#c9943b";
-const DEEP_NAVY = "#082a48";
 const TEXT_NAVY = "#0f3144";
 
-/*
-  Hero using an external image:
-  - subtle parallax on mouse move (desktop)
-  - clipped angled mask to match composition
-  - improved contrast overlays and refined CTA
-*/
-
 export default function HeroImageVariant({ onBook = () => alert("Book appointment") }) {
-  // small parallax using framer-motion with pointer position
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-
-  // small transform values
   const imgX = useTransform(x, [-200, 200], [-10, 10]);
   const imgY = useTransform(y, [-120, 120], [-6, 6]);
-
   const containerRef = useRef(null);
 
   function handlePointer(e) {
+    if (e.pointerType === "touch") return;
     const rect = containerRef.current?.getBoundingClientRect();
     if (!rect) return;
-    const px = e.clientX - rect.left - rect.width / 2;
-    const py = e.clientY - rect.top - rect.height / 2;
-    x.set(px);
-    y.set(py);
+    x.set(e.clientX - rect.left - rect.width / 2);
+    y.set(e.clientY - rect.top - rect.height / 2);
   }
 
   function resetPointer() {
@@ -41,70 +28,130 @@ export default function HeroImageVariant({ onBook = () => alert("Book appointmen
   }
 
   return (
-    <header className="w-full bg-white mt-10">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center py-16 lg:py-24">
-          {/* Left text */}
-          <div className="lg:col-span-6 z-30">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight" style={{ color: TEXT_NAVY }}>
-              Making Your Future a Success
-            </h1>
+    <header className="w-full bg-white mt-16">
+      {/* ⚡ FULL WIDTH SECTION — NO SIDE SPACE */}
+      <div className="w-full px-4 sm:px-6 lg:px-10">
 
-            <p className="mt-6 text-base sm:text-lg max-w-xl text-slate-700">
-              We provide confidential and reliable consulting services tailored to your individual financial
-              requirements. Our dedicated team is ready to assist you comprehensively.
-            </p>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center py-12">
 
-            <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
-              <button
-                onClick={onBook}
-                aria-label="Book an appointment"
-                className="inline-flex items-center justify-center rounded-full px-8 py-3 font-semibold shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transform-gpu hover:-translate-y-0.5"
-                style={{ background: `linear-gradient(90deg, ${ACCENT_START}, ${ACCENT_END})`, color: "#072033" }}
+          {/* LEFT: wider text section */}
+          <div className="lg:col-span-6">
+            <div className="bg-white/95 rounded-2xl p-8 sm:p-10 shadow-[0_18px_40px_rgba(2,6,23,0.10)] border border-gray-100 w-full">
+              
+              <h1
+                className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight"
+                style={{ color: TEXT_NAVY }}
               >
-                BOOK AN APPOINTMENT
-              </button>
+                Making your future a success
+              </h1>
 
-              <a href="#services" className="text-sm font-medium" style={{ color: DEEP_NAVY }}>
-                Learn more
-              </a>
+              <p className="mt-4 text-base sm:text-lg text-slate-700 max-w-2xl">
+                Confidential, practical financial consulting tailored to your goals.  
+                We turn complex choices into clear plans so you can move forward with confidence.
+              </p>
+
+              <div className="mt-6 flex flex-col sm:flex-row gap-4">
+                <button
+                   onClick={(e) => {
+                        e.preventDefault();
+                        if (typeof window !== "undefined" && window.Calendly?.initPopupWidget) {
+                          window.Calendly.initPopupWidget({ url: "https://calendly.com/futurewesecure-info/30min" });
+                        } else {
+                          window.open("https://calendly.com/futurewesecure-info/30min", "_blank", "noopener,noreferrer");
+                        }
+                      }}
+                  className="rounded-full px-8 py-3 font-semibold shadow hover:-translate-y-0.5 transition-all"
+                  style={{
+                    background: `linear-gradient(90deg, ${ACCENT_START}, ${ACCENT_END})`,
+                    color: "#072033",
+                  }}
+
+                >
+                  Book an Appointment
+                </button>
+
+                <a href="/service" className="text-sm font-medium text-slate-700 mt-1 sm:mt-0">
+                  Learn more
+                </a>
+              </div>
+
+              <ul className="mt-6 grid grid-cols-2 gap-3 text-sm text-slate-600">
+                <li>Tailored financial plans</li>
+                <li>Experienced advisors</li>
+                <li>Secure & confidential</li>
+                <li>Clear next steps</li>
+              </ul>
+
             </div>
           </div>
 
-          {/* Right image with pointer-based parallax */}
+          {/* RIGHT: wider image section */}
           <div
-            className="lg:col-span-6 flex justify-end"
+            className="lg:col-span-6 flex justify-center"
             ref={containerRef}
             onPointerMove={handlePointer}
             onPointerLeave={resetPointer}
-            onPointerCancel={resetPointer}
           >
-            <div className="relative w-full max-w-2xl lg:max-w-xl">
-              <div aria-hidden className="absolute -left-20 top-0 bottom-0 w-[50%] hidden lg:block rounded-2xl" style={{ background: DEEP_NAVY }} />
+            <div className="relative w-full">
 
-              <div
-                className="relative overflow-hidden rounded-3xl shadow-2xl"
-                style={{ clipPath: "polygon(12% 0, 100% 0, 100% 100%, 0% 100%)" }}
-              >
+              {/* IMAGE WRAPPER — full width */}
+              <div className="relative overflow-hidden rounded-3xl shadow-2xl w-full">
                 <motion.img
                   src={heroImg}
-                  alt="Financial graph stylized"
-                  className="w-full h-full object-cover block"
-                  draggable={false}
-                  style={{ x: imgX, y: imgY }}
-                  initial={{ scale: 1.02 }}
-                  whileHover={{ scale: 1.03 }}
-                  transition={{ type: "spring", stiffness: 70, damping: 12 }}
+                  alt="Financial overview"
+                  className="w-full h-[320px] sm:h-[380px] lg:h-[460px] object-cover"
+                  // draggable={false}
+                  // style={{ x: imgX, y: imgY }}
+                  // initial={{ scale: 1.02 }}
+                  // whileHover={{ scale: 1.03 }}
+                  // transition={{ type: "spring", stiffness: 70, damping: 14 }}
                 />
 
-                {/* darker multiply overlay to keep text contrast on sections */}
-                <div aria-hidden className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(180deg, rgba(8,42,72,0.28), rgba(8,42,72,0.12))", mixBlendMode: "multiply" }} />
+                {/* translucent floating card */}
+                <div className="absolute left-4 bottom-4 sm:left-6 sm:bottom-6 z-30">
+                  <div className="backdrop-blur-sm bg-white/75 rounded-xl p-4 shadow-md border border-gray-100">
+                    <div className="text-xs font-semibold text-slate-700">Ready to plan?</div>
+                    <div className="mt-1 text-sm font-medium" style={{ color: TEXT_NAVY }}>
+                      Quick consult — 15 mins
+                    </div>
 
-                {/* gold decorative glow */}
-                <div aria-hidden className="absolute right-6 top-6 w-24 h-24 rounded-full" style={{ background: "radial-gradient(circle at 30% 30%, rgba(247,216,139,0.12), transparent 60%)", pointerEvents: "none" }} />
+                    <div className="mt-3 flex items-center gap-3">
+                      <button
+                         onClick={(e) => {
+                        e.preventDefault();
+                        if (typeof window !== "undefined" && window.Calendly?.initPopupWidget) {
+                          window.Calendly.initPopupWidget({ url: "https://calendly.com/futurewesecure-info/30min" });
+                        } else {
+                          window.open("https://calendly.com/futurewesecure-info/30min", "_blank", "noopener,noreferrer");
+                        }
+                      }}
+                        className="px-4 py-1 rounded-full text-sm font-semibold"
+                        style={{
+                          background: `linear-gradient(90deg, ${ACCENT_START}, ${ACCENT_END})`,
+                          color: "#072033",
+                        }}
+                      >
+                        Book
+                      </button>
+
+                      <a href="#" className="text-xs text-slate-600"  onClick={(e) => {
+                        e.preventDefault();
+                        if (typeof window !== "undefined" && window.Calendly?.initPopupWidget) {
+                          window.Calendly.initPopupWidget({ url: "https://calendly.com/futurewesecure-info/30min" });
+                        } else {
+                          window.open("https://calendly.com/futurewesecure-info/30min", "_blank", "noopener,noreferrer");
+                        }
+                      }}>
+                        Contact us
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </header>

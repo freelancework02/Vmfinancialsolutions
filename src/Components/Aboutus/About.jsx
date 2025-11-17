@@ -32,7 +32,7 @@ export default function AboutUsFounder({ founderImage, founderName = "Ashish Pat
   return (
     <section
       aria-labelledby="about-heading"
-      className="relative mt-10 py-12 md:py-16 px-4 sm:px-6 lg:px-12"
+      className="relative mt-16 py-12 md:py-16 px-4 sm:px-6 lg:px-12"
       style={{ background: "linear-gradient(180deg,#ffffff 0%, #fffaf6 36%, #ffffff 100%)" }}
     >
     
