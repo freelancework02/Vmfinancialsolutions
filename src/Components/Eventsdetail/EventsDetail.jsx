@@ -1,10 +1,8 @@
-// EventsDetail.VariantA.Enhanced.jsx
+// EventsDetail.Modern.jsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   FiCalendar,
   FiUser,
-  FiExternalLink,
-  FiVideo,
   FiImage,
   FiX,
   FiChevronLeft,
@@ -12,201 +10,156 @@ import {
 } from "react-icons/fi";
 
 /**
- * EventsDetail Variant A — Enhanced (fixed hero + navbar offset)
+ * EventsDetail - Modern (updated with real demo data & images)
+ * - Clean, readable layout
+ * - Large hero with concise floating info card
+ * - Sticky right-side details & actions
+ * - Simple lightbox with keyboard controls
  *
- * Fixes:
- * - mobile hero height constrained (h-64) to avoid huge hero pushing content under navbar
- * - measures fixed/sticky navbar (id="site-navbar" or data-fixed-navbar="true") and applies top padding
- * - responsive, accessible lightbox and gallery
+ * Props:
+ *  - event: object with title, date, host, thumbnailUrl, gallery (array), meetingLink, description
+ *  - previousEvents: optional array of prior events
  *
- * Usage: same props as before { event, previousEvents }
+ * Usage:
+ *  <EventsDetailModern event={myEvent} previousEvents={myPrevEvents} />
+ *
+ * If no event prop passed, built-in demo event with proper images will show.
  */
 
-export default function EventsDetailVariantA({ event = {}, previousEvents = [] }) {
-  const demoCurrent = useMemo(
-    () => ({
-      title: "Design Systems & DX: A Practical Deep Dive",
-      date: "2025-11-18T17:30:00+05:30",
-      description:
-        "A hands-on session covering design tokens, accessibility, and performance budgets. Bring your questions and screens!",
-      host: "We Plan Future — Jack Patel.",
-      meetingLink: "https://meet.example.com/weplanfuture-demo",
-      thumbnailUrl:
-        "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1400&auto=format&fit=crop",
-      gallery: [
-        "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1400&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1400&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1400&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1487014679447-9f8336841d58?q=80&w=1400&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1529336953121-a9d1b95a0df1?q=80&w=1400&auto=format&fit=crop",
-      ],
-    }),
-    []
-  );
+const ACCENT_START = "#f7d88b";
+const ACCENT_END = "#c9943b";
+const GRADIENT = `linear-gradient(135deg, ${ACCENT_START}, ${ACCENT_END})`;
 
-  const demoPrevious = useMemo(
-    () => [
-      {
-        id: 101,
-        title: "Frontend Roadmap & Services Showcase",
-        date: "2025-10-22T18:00:00+05:30",
-        host: "We Plan Future",
-        thumbnailUrl:
-          "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1200&auto=format&fit=crop",
-        recordingLink: "https://example.com/recording/frontend-roadmap",
-      },
-      {
-        id: 102,
-        title: "React Accessibility: Patterns That Scale",
-        date: "2025-09-10T17:00:00+05:30",
-        host: "WPF Community",
-        thumbnailUrl:
-          "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop",
-        recordingLink: "https://example.com/recording/react-a11y",
-      },
-    ],
-    []
-  );
+/* ---------- demo data (used when no event prop provided) ---------- */
+const DEMO_EVENT = {
+  title: "Design Systems & DX — Practical Deep Dive",
+  date: "2025-11-24T18:30:00+05:30",
+  host: "We Plan Future · Jack Patel",
+  description:
+    `<p>Join Jack Patel for a hands-on session exploring design systems that scale, accessibility patterns, and practical developer experience improvements you can adopt right away.</p>
+     <ul>
+       <li>Short talk: design tokens & theming</li>
+       <li>Live demo: building a small component library</li>
+       <li>Q&A and practical next steps</li>
+     </ul>
+     <p>Bring your questions — this session is interactive.</p>`,
+  thumbnailUrl:
+    "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1600&auto=format&fit=crop",
+  gallery: [
+    "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1400&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1400&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1400&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1504805572947-34fad45aed93?q=80&w=1400&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1400&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1487014679447-9f8336841d58?q=80&w=1400&auto=format&fit=crop",
+  ],
+  meetingLink: "https://meet.google.com/example-meet-link",
+};
 
-  const model = { ...demoCurrent, ...event };
-  const prevList = Array.isArray(previousEvents) && previousEvents.length ? previousEvents : demoPrevious;
+const DEMO_PREVIOUS = [
+  {
+    id: "prev-101",
+    title: "Frontend Roadmap: Build with Confidence",
+    date: "2025-10-22T18:00:00+05:30",
+    thumbnailUrl: "https://images.unsplash.com/photo-1529336953121-a9d1b95a0df1?q=80&w=800&auto=format&fit=crop",
+    recordingLink: "https://example.com/recording/frontend-roadmap",
+  },
+  {
+    id: "prev-102",
+    title: "React Accessibility Patterns",
+    date: "2025-09-10T17:00:00+05:30",
+    thumbnailUrl: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800&auto=format&fit=crop",
+    recordingLink: "https://example.com/recording/react-a11y",
+  },
+  {
+    id: "prev-103",
+    title: "Practical Performance Budgets",
+    date: "2025-08-05T16:00:00+05:30",
+    thumbnailUrl: "https://images.unsplash.com/photo-1504805572947-34fad45aed93?q=80&w=800&auto=format&fit=crop",
+    recordingLink: "https://example.com/recording/perf-budgets",
+  },
+];
 
-  const displayDate = useMemo(() => formatDate(model.date), [model.date]);
+/* -------------------- component -------------------- */
+export default function EventsDetailModern({ event = null, previousEvents = null }) {
+  // use provided event or demo
+  const model = useMemo(() => ({ ...(event || DEMO_EVENT) }), [event]);
+  const prevList = Array.isArray(previousEvents) && previousEvents.length ? previousEvents : DEMO_PREVIOUS;
 
-  // lightbox
-  const [open, setOpen] = useState(false);
-  const [idx, setIdx] = useState(0);
-  const images = model.gallery || [];
-  const hasGallery = images && images.length > 0;
+  const images = Array.isArray(model.gallery) ? model.gallery : [];
+  const hasGallery = images.length > 0;
+
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
   const lightboxRef = useRef(null);
-  const heroRef = useRef(null);
 
-  // dynamic top offset to clear navbar
-  const [topOffset, setTopOffset] = useState(null);
+  const formattedDate = useMemo(() => safeFormatDate(model.date), [model.date]);
 
-  // measure navbar (id="site-navbar" or data-fixed-navbar="true") and set padding
+  /* keyboard nav for lightbox */
   useEffect(() => {
-    function computeOffset() {
-      const defaultMobile = 64; // px
-      const defaultDesktop = 96; // px
-
-      const byId = document.getElementById("site-navbar");
-      const byAttr = document.querySelector("[data-fixed-navbar='true']");
-      const navbarEl = byId || byAttr;
-
-      if (navbarEl) {
-        const rect = navbarEl.getBoundingClientRect();
-        // treat it as fixed/sticky if positioned at/near top or style says fixed/sticky
-        const style = window.getComputedStyle(navbarEl);
-        const isAtTop = Math.abs(rect.top) < 4 || style.position === "fixed" || style.position === "sticky";
-        if (isAtTop) {
-          const height = Math.ceil(rect.height);
-          setTopOffset(height + 12); // breathing space
-          return;
-        }
-      }
-
-      const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-      setTopOffset(vw < 768 ? defaultMobile : defaultDesktop);
-    }
-
-    computeOffset();
-    let t = null;
-    const onResize = () => {
-      clearTimeout(t);
-      t = setTimeout(computeOffset, 80);
-    };
-    window.addEventListener("resize", onResize);
-    window.addEventListener("orientationchange", onResize);
-    return () => {
-      clearTimeout(t);
-      window.removeEventListener("resize", onResize);
-      window.removeEventListener("orientationchange", onResize);
-    };
-  }, []);
-
-  // open lightbox
-  const openAt = (i) => {
-    if (!Array.isArray(images) || images.length === 0) return;
-    setIdx(i);
-    setOpen(true);
-    setTimeout(() => lightboxRef.current?.focus?.(), 0);
-  };
-  const next = () => setIdx((p) => (p + 1) % images.length);
-  const prev = () => setIdx((p) => (p - 1 + images.length) % images.length);
-
-  // keyboard nav
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === "Escape") setOpen(false);
-      if (!open) return;
-      if (e.key === "ArrowRight") next();
+    const handler = (e) => {
+      if (!lightboxOpen) return;
+      if (e.key === "Escape") handleClose();
       if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open, images.length]);
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [lightboxOpen, images.length]);
 
-  // small parallax effect
-  useEffect(() => {
-    const el = heroRef.current;
-    if (!el) return;
-    const onScroll = () => {
-      const rect = el.getBoundingClientRect();
-      const pct = Math.min(Math.max((window.innerHeight - rect.top) / (window.innerHeight + rect.height), 0), 1);
-      const translate = (1 - pct) * 8;
-      el.style.transform = `translateY(${translate}px)`;
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  function openAt(i) {
+    if (!hasGallery) return;
+    setLightboxIndex(Math.max(0, i % images.length));
+    setLightboxOpen(true);
+    setTimeout(() => lightboxRef.current?.focus?.(), 50);
+    document.body.style.overflow = "hidden";
+  }
 
-  const orange = "#f37021";
-  const orangeDark = "#d95800";
-  const gradient = `linear-gradient(135deg, ${orange}, ${orangeDark})`;
+  function handleClose() {
+    setLightboxOpen(false);
+    document.body.style.overflow = "";
+  }
 
-  const joinMeeting = () => {
-    if (!model.meetingLink) return;
-    window.open(model.meetingLink, "_blank", "noopener,noreferrer");
-  };
+  function prev() {
+    setLightboxIndex((p) => (p - 1 + images.length) % images.length);
+  }
 
-  // safeTop: while measuring, provide a safe default so UI doesn't overlap
-  const safeTop = topOffset ?? 64;
+  function next() {
+    setLightboxIndex((p) => (p + 1) % images.length);
+  }
+
+  function joinMeeting() {
+    if (!model.meetingLink) {
+      // scroll to contact or bottom if none
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+      return;
+    }
+    window.open(model.meetingLink, "_blank", "noopener noreferrer");
+  }
 
   return (
-    <section
-      className="w-full mb-8"
-      style={{
-        // apply padding at top equal to navbar height + gap so hero & floating card are below navbar
-        paddingTop: `${safeTop}px`,
-      }}
-    >
+    <section className="w-full">
       {/* HERO */}
-      <div
-        ref={heroRef}
-        className="relative h-64 md:h-[44vw] max-h-[560px] w-full overflow-hidden rounded-2xl"
-        aria-hidden="false"
-      >
-        <img
-          src={model.thumbnailUrl}
-          alt={model.title || "Event hero"}
-          className="w-full h-full object-cover transition-transform duration-700 will-change-transform"
-          loading="lazy"
-        />
-
-        {/* Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-          <div className="absolute left-0 top-0 h-full w-1/6 bg-gradient-to-r from-black/10 to-transparent" />
+      <div className="relative w-full">
+        <div className="h-64 md:h-96 lg:h-[520px] w-full overflow-hidden rounded-2xl">
+          {model.thumbnailUrl ? (
+            <img
+              src={model.thumbnailUrl}
+              alt={model.title}
+              className="w-full h-full object-cover brightness-[0.75] transition-transform duration-700 hover:scale-[1.02]"
+              loading="lazy"
+            />
+          ) : (
+            <div className="w-full h-full bg-gray-100" />
+          )}
         </div>
 
-        {/* Floating info card */}
-        <div className="absolute left-4 right-4 bottom-4 md:left-12 md:right-auto md:bottom-12 md:w-[46%]">
+        {/* floating info card */}
+        <div className="absolute left-4 right-4 md:left-12 md:right-auto bottom-4 md:bottom-12 md:w-1/2">
           <article
-            className="rounded-2xl bg-white/97 backdrop-blur-sm px-5 py-4 shadow-[0_18px_45px_rgba(3,7,18,0.12)] border border-black/6"
-            aria-label={`Event info for ${model.title}`}
-            role="region"
+            className="rounded-2xl bg-white/99 p-4 md:p-6 shadow-2xl border"
+            style={{ borderColor: "rgba(8,42,72,0.06)" }}
+            aria-label={`Event card: ${model.title}`}
           >
             <div className="flex items-start justify-between gap-4">
               <div className="min-w-0">
@@ -214,234 +167,179 @@ export default function EventsDetailVariantA({ event = {}, previousEvents = [] }
                   className="inline-flex items-center gap-2 text-xs font-semibold text-white rounded-full px-2 py-0.5"
                   style={{ background: "rgba(0,0,0,0.45)" }}
                 >
-                  <FiCalendar aria-hidden="true" />
-                  <span className="text-white text-xs">{displayDate}</span>
+                  <FiCalendar /> <span className="leading-none">{formattedDate}</span>
                 </div>
 
-                <h1 className="mt-2 text-base md:text-lg font-extrabold text-white truncate">{model.title}</h1>
-
-                <p className="mt-1 text-sm text-white line-clamp-2">{model.host}</p>
-
-                <p className="mt-2 text-xs text-white">
-                  <strong>Format:</strong> Live session · Q&A · Slides available
-                </p>
+                <h1 className="mt-2 text-lg md:text-xl font-extrabold text-white truncate">{model.title}</h1>
+                <p className="mt-1 text-sm text-white">{model.host}</p>
+                <p className="mt-2 text-xs text-white">Format: Live · Q&A · Slides</p>
               </div>
 
               <div className="flex flex-col items-end gap-2">
-                <div className="flex flex-col gap-2">
-                  {model.meetingLink ? (
-                    <button
-                      onClick={joinMeeting}
-                      className="rounded-full px-3 py-1.5 text-sm font-semibold text-white"
-                      style={{ background: gradient, boxShadow: "0 10px 30px rgba(243,112,33,0.12)" }}
-                    >
-                      Join Meeting
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })}
-                      className="rounded-full px-3 py-1.5 text-sm font-semibold border border-black/10 bg-white text-black shadow-sm"
-                    >
-                      Contact Organizer
-                    </button>
-                  )}
+                <button
+                  onClick={joinMeeting}
+                  className="rounded-full px-3 py-1.5 text-sm font-semibold text-white shadow-sm"
+                  style={{ background: GRADIENT }}
+                >
+                  {model.meetingLink ? "Join Meeting" : "Contact Organizer"}
+                </button>
 
-                  {hasGallery && (
-                    <button
-                      onClick={() => openAt(0)}
-                      className="rounded-full px-3 py-1 text-sm font-medium text-black border border-black/6 bg-white/90"
-                    >
-                      View Gallery
-                    </button>
-                  )}
-                </div>
+                {hasGallery && (
+                  <button
+                    onClick={() => openAt(0)}
+                    className="rounded-full px-3 py-1 text-white text-sm font-medium border"
+                    style={{ borderColor: "rgba(8,42,72,0.06)" }}
+                  >
+                    View Gallery
+                  </button>
+                )}
 
-                <div className="text-right text-xs text-white">Approx. 90 mins</div>
+                <div className="text-xs text-white">~90 mins</div>
               </div>
             </div>
           </article>
         </div>
       </div>
 
-      {/* CONTENT + GALLERY */}
-      <div className="max-w-6xl mx-auto px-4 md:px-6 mt-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left column */}
-          <div className="lg:col-span-2 space-y-6">
-            <section className="rounded-2xl border border-black/8 bg-white p-5 md:p-6 shadow-sm">
-              <header className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: gradient }}>
-                  <FiImage className="text-white" aria-hidden="true" />
-                </div>
-                <div>
-                  <h2 className="text-lg font-semibold text-black">About this event</h2>
-                  <p className="text-xs text-black/60">What to expect and how to prepare</p>
-                </div>
-              </header>
-
-              <div className="prose max-w-none text-black/75">
-                {looksLikeHtml(model.description) ? (
-                  <div dangerouslySetInnerHTML={{ __html: safeHTML(model.description) }} />
-                ) : (
-                  <p>{model.description}</p>
-                )}
-              </div>
-            </section>
-
-            {/* Gallery */}
-            <section>
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-lg font-semibold text-black">Gallery</h3>
-                {hasGallery && <div className="text-sm text-black/60">{images.length} photos</div>}
-              </div>
-
-              {hasGallery ? (
-                <>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {images.slice(0, 6).map((src, i) => (
-                      <button
-                        key={i}
-                        onClick={() => openAt(i)}
-                        className="group relative overflow-hidden rounded-xl border border-black/6 focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-100"
-                        aria-label={`Open image ${i + 1}`}
-                        title="Open image"
-                      >
-                        <div className="aspect-[4/3]">
-                          <img
-                            src={src}
-                            alt={`Event photo ${i + 1}`}
-                            className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
-                            loading="lazy"
-                          />
-                        </div>
-                        <div
-                          className="absolute left-2 top-2 px-2 py-0.5 rounded-md text-xs text-white"
-                          style={{ background: gradient }}
-                        >
-                          #{i + 1}
-                        </div>
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </button>
-                    ))}
-                  </div>
-
-                  {images.length > 6 && (
-                    <div className="mt-3 flex justify-center">
-                      <button
-                        onClick={() => openAt(6)}
-                        className="rounded-lg px-4 py-2 text-sm font-semibold bg-white border border-black/8 shadow-sm"
-                      >
-                        View more
-                      </button>
-                    </div>
-                  )}
-                </>
+      {/* MAIN CONTENT */}
+      <div className="max-w-6xl mx-auto px-4 md:px-6 mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* main column */}
+        <div className="lg:col-span-2 space-y-6">
+          <section
+            className="rounded-2xl p-5 bg-white border shadow-sm"
+            style={{ borderColor: "rgba(8,42,72,0.04)" }}
+          >
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">About</h2>
+            <div className="text-gray-700 prose max-w-none">
+              {looksLikeHtml(model.description) ? (
+                <div dangerouslySetInnerHTML={{ __html: safeHTML(model.description) }} />
               ) : (
-                <div className="rounded-xl border border-dashed border-black/10 p-6 text-center text-black/60">Gallery will appear soon.</div>
+                <p>{model.description}</p>
               )}
-            </section>
-          </div>
+            </div>
+          </section>
 
-          {/* Right column */}
-          <aside>
-            <div className="rounded-2xl border border-black/8 bg-white p-4 shadow-sm sticky top-[calc(12px+var(--safe-navbar,0px))]">
-              <h4 className="font-semibold text-black mb-3">Event details</h4>
-              <ul className="text-sm text-black/70 space-y-3">
-                <li className="flex items-start gap-3">
-                  <FiCalendar className="mt-0.5 text-black/50" />
-                  <div>
-                    <div className="font-medium text-black">Date & time</div>
-                    <div>{displayDate}</div>
-                  </div>
-                </li>
-
-                {model.host && (
-                  <li className="flex items-start gap-3">
-                    <FiUser className="mt-0.5 text-black/50" />
-                    <div>
-                      <div className="font-medium text-black">Hosted by</div>
-                      <div>{model.host}</div>
-                    </div>
-                  </li>
-                )}
-              </ul>
-
-              <div className="mt-3">
-                {model.meetingLink ? (
-                  <button
-                    onClick={joinMeeting}
-                    className="w-full rounded-xl px-4 py-2.5 text-sm font-semibold text-white"
-                    style={{ background: gradient }}
-                  >
-                    Join Meeting
-                  </button>
-                ) : (
-                  <a href="#contact" className="w-full inline-block text-center rounded-xl px-4 py-2.5 text-sm font-semibold border border-black/8">
-                    Contact Organizer
-                  </a>
-                )}
-              </div>
+          <section>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-lg font-semibold">Gallery</h3>
+              <div className="text-sm text-gray-500">{images.length} photos</div>
             </div>
 
-            <div className="mt-4 rounded-2xl border border-black/8 bg-white p-3 shadow-sm">
-              <h5 className="text-sm font-semibold text-black/80 mb-2">Previous events</h5>
-              <div className="space-y-3">
-                {prevList.slice(0, 3).map((p) => (
-                  <div key={p.id || p.title} className="flex items-center gap-3">
-                    <img src={p.thumbnailUrl} alt={p.title} className="w-14 h-10 object-cover rounded-md" />
-                    <div>
-                      <div className="text-sm font-medium text-black">{p.title}</div>
-                      <div className="text-xs text-black/60">{formatDate(p.date)}</div>
+            {hasGallery ? (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {images.slice(0, 9).map((src, i) => (
+                  <button
+                    key={i}
+                    onClick={() => openAt(i)}
+                    className="group relative rounded-lg overflow-hidden border shadow-sm hover:shadow-md transition"
+                    aria-label={`Open image ${i + 1}`}
+                  >
+                    <div className="aspect-[4/3]">
+                      <img
+                        src={src}
+                        alt={`Event image ${i + 1}`}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        loading="lazy"
+                      />
                     </div>
-                  </div>
+
+                    <div
+                      className="absolute left-2 top-2 px-2 py-0.5 rounded-md text-xs text-white"
+                      style={{ background: GRADIENT }}
+                    >
+                      #{i + 1}
+                    </div>
+                  </button>
                 ))}
               </div>
-            </div>
-          </aside>
+            ) : (
+              <div className="rounded-lg border-dashed border p-6 text-center text-gray-500">No gallery yet</div>
+            )}
+          </section>
         </div>
+
+        {/* sidebar */}
+        <aside className="space-y-4">
+          <div
+            className="rounded-2xl p-4 bg-white border shadow-sm sticky top-24"
+            style={{ borderColor: "rgba(8,42,72,0.04)" }}
+          >
+            <h4 className="font-semibold text-gray-900">Event details</h4>
+            <ul className="mt-3 space-y-3 text-sm text-gray-700">
+              <li>
+                <div className="font-medium">When</div>
+                <div className="text-gray-500">{formattedDate}</div>
+              </li>
+              <li>
+                <div className="font-medium">Host</div>
+                <div className="text-gray-500">{model.host}</div>
+              </li>
+            </ul>
+
+            <div className="mt-4">
+              <button
+                onClick={joinMeeting}
+                className="w-full rounded-lg px-4 py-2 font-semibold text-white"
+                style={{ background: GRADIENT }}
+              >
+                {model.meetingLink ? "Join Meeting" : "Request Info"}
+              </button>
+            </div>
+          </div>
+
+          <div
+            className="rounded-2xl p-3 bg-white border shadow-sm"
+            style={{ borderColor: "rgba(8,42,72,0.04)" }}
+          >
+            <h5 className="font-semibold text-gray-900 mb-2">Previous events</h5>
+            <div className="space-y-3 text-sm text-gray-700">
+              {prevList.slice(0, 3).map((p, i) => (
+                <div key={p.id || i} className="flex items-start gap-3">
+                  <div className="w-14 h-10 rounded-md bg-gray-100 overflow-hidden flex-shrink-0">
+                    {p.thumbnailUrl ? (
+                      <img src={p.thumbnailUrl} alt={p.title} className="w-full h-full object-cover" />
+                    ) : null}
+                  </div>
+                  <div>
+                    <div className="font-medium text-gray-900 text-sm">{p.title}</div>
+                    <div className="text-xs text-gray-500">{safeFormatDate(p.date)}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </aside>
       </div>
 
       {/* LIGHTBOX */}
-      {open && hasGallery && (
+      {lightboxOpen && hasGallery && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4"
+          className="fixed inset-0 z-50 grid place-items-center bg-black/80 p-4"
+          onClick={handleClose}
           role="dialog"
           aria-modal="true"
-          aria-label="Image preview"
-          onClick={() => setOpen(false)}
         >
-          <div
-            ref={lightboxRef}
-            tabIndex={-1}
-            className="relative w-full max-w-5xl outline-none"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img src={images[idx]} alt={`Preview ${idx + 1}`} className="w-full max-h-[78vh] object-contain rounded-md shadow-lg" loading="eager" />
+          <div className="relative w-full max-w-4xl" onClick={(e) => e.stopPropagation()}>
+            <img
+              ref={lightboxRef}
+              src={images[lightboxIndex]}
+              alt={`Preview ${lightboxIndex + 1}`}
+              className="w-full max-h-[80vh] object-contain rounded-md shadow-lg"
+            />
 
-            {/* Top left caption */}
-            <div className="absolute left-4 top-4 rounded-md px-3 py-1 text-sm text-white" style={{ background: "rgba(0,0,0,0.35)" }}>
-              {model.title}
-            </div>
-
-            {/* Close */}
-            <button
-              onClick={() => setOpen(false)}
-              className="absolute top-4 right-4 inline-flex items-center justify-center rounded-full p-2 bg-white/10 text-white focus:outline-none focus:ring-2 focus:ring-white/30"
-              aria-label="Close preview"
-            >
+            <button onClick={handleClose} className="absolute top-3 right-3 p-2 rounded-full bg-white/90" aria-label="Close">
               <FiX />
             </button>
 
-            {/* Prev / Next */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 prev();
               }}
-              aria-label="Previous image"
-              className="absolute left-4 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full p-3 bg-white/10 text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+              className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90"
+              aria-label="Previous"
             >
-              <FiChevronLeft size={20} />
+              <FiChevronLeft />
             </button>
 
             <button
@@ -449,23 +347,14 @@ export default function EventsDetailVariantA({ event = {}, previousEvents = [] }
                 e.stopPropagation();
                 next();
               }}
-              aria-label="Next image"
-              className="absolute right-4 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full p-3 bg-white/10 text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90"
+              aria-label="Next"
             >
-              <FiChevronRight size={20} />
+              <FiChevronRight />
             </button>
 
-            {/* Footer controls */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 bg-black/40 rounded-full px-3 py-1.5">
-              <span className="text-xs text-white/90">{idx + 1} / {images.length}</span>
-              <button
-                onClick={() => {
-                  window.open(images[idx], "_blank", "noopener,noreferrer");
-                }}
-                className="text-xs text-white/90 underline"
-              >
-                Open original
-              </button>
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white text-xs px-3 py-1 rounded-full">
+              {lightboxIndex + 1} / {images.length}
             </div>
           </div>
         </div>
@@ -474,11 +363,12 @@ export default function EventsDetailVariantA({ event = {}, previousEvents = [] }
   );
 }
 
-/* helpers */
-function formatDate(input) {
+/* ---------------- helpers ---------------- */
+
+function safeFormatDate(d) {
   try {
-    const dt = new Date(input);
-    if (Number.isNaN(dt.getTime())) return String(input || "");
+    const dt = new Date(d);
+    if (Number.isNaN(dt.getTime())) return String(d || "");
     return dt.toLocaleString(undefined, {
       weekday: "short",
       year: "numeric",
@@ -488,34 +378,15 @@ function formatDate(input) {
       minute: "2-digit",
     });
   } catch {
-    return String(input || "");
+    return String(d || "");
   }
 }
+
 function looksLikeHtml(s) {
-  if (!s || typeof s !== "string") return false;
-  return /<\/?[a-z][\s\S]*>/i.test(s);
+  return typeof s === "string" && /<\/?[a-z][\s\S]*>/i.test(s);
 }
+
 function safeHTML(html) {
-  try {
-    const allowed = ["B", "I", "STRONG", "EM", "A", "P", "BR", "UL", "OL", "LI"];
-    const div = document.createElement("div");
-    div.innerHTML = html;
-    const walker = document.createTreeWalker(div, NodeFilter.SHOW_ELEMENT, null);
-    const toRemove = [];
-    while (walker.nextNode()) {
-      const node = walker.currentNode;
-      if (!allowed.includes(node.nodeName)) {
-        toRemove.push(node);
-      } else if (node.nodeName === "A") {
-        node.setAttribute("target", "_blank");
-        node.setAttribute("rel", "noopener noreferrer");
-        const href = node.getAttribute("href") || "";
-        if (!/^https?:\/\//i.test(href)) node.setAttribute("href", "#");
-      }
-    }
-    toRemove.forEach((n) => n.replaceWith(...n.childNodes));
-    return div.innerHTML;
-  } catch {
-    return String(html || "");
-  }
+  // minimal sanitizer: strip script/style and return the rest
+  return String(html || "").replace(/<(script|style)[\s\S]*?>[\s\S]*?<\/\1>/gi, "");
 }
