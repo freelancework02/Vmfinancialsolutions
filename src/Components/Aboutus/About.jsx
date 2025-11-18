@@ -28,7 +28,7 @@ const GOLD_END = "#c9943b";
 const DEEP_NAVY = "#082a48";
 const TEXT = "#0f0f0f";
 
-export default function AboutUsFounder({ founderImage, founderName = "Ashish Patel", initials = "AP" }) {
+export default function AboutUsFounder({ founderImage, founderName = "Vaibhav Maddiwar", initials = "VM" }) {
   return (
     <section
       aria-labelledby="about-heading"
@@ -56,25 +56,18 @@ export default function AboutUsFounder({ founderImage, founderName = "Ashish Pat
               style={{ borderColor: "rgba(8,42,72,0.04)" }}
             >
               <h2 className="text-2xl font-semibold" style={{ color: DEEP_NAVY }}>
-                VM Financial Solutions — Education first
+              Our Mission 🎯 
               </h2>
 
               <div className="mt-4 text-black/75 space-y-4 leading-relaxed">
                 <p>
-                  VM financial solutions was conceived to primarily take an educational approach towards
-                  personal finances, to first teach people the basics of personal finances and then help them
-                  take actions to meet their financial goals.
+                Personal finances are something that every individual should know and understand. But sadly, there is very little formal education on the topic and many of us fumble about the topic copying what everyone else is doing. But this may not always be in our best interest. What may be a good strategy for someone else may not be the best for you, because personal finance is unique to every family, with different goals, different time horizons, different challenges.
                 </p>
 
-                <p>
-                  We begin with fundamentals — budgeting, saving, investing and risk awareness — then move to
-                  practical, personalized steps that fit your timeline and values. We do not apply cookie-cutter
-                  solutions; every plan is tailored to the family it serves.
-                </p>
+              
 
                 <p>
-                  Through workshops, guided reviews and one-on-one planning, our goal is to make finance clear,
-                  actionable, and sustainable for the long term.
+                 VM financial solutions was conceived to primarily take an educational approach towards personal finances, to first teach people the basics of personal finances and then help them take actions to meet their financial goals.
                 </p>
               </div>
 
@@ -100,14 +93,15 @@ export default function AboutUsFounder({ founderImage, founderName = "Ashish Pat
               {/* CTA row */}
               <div className="mt-6 flex flex-col sm:flex-row gap-3">
                 <a
-                  href="#contact"
+                  href=""
+                 onClick={(e) => { e.preventDefault(); window.Calendly?.initPopupWidget?.({ url: 'https://calendly.com/vmfinsolutions/financialneedanalysis' }); }}
                   className="inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 font-semibold"
                   style={{ background: `linear-gradient(90deg, ${GOLD_START}, ${GOLD_END})`, color: DEEP_NAVY }}
                 >
                   Book a review
                 </a>
                 <a
-                  href="#services"
+                  href="/service"
                   className="inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 border"
                   style={{ borderColor: "rgba(8,42,72,0.06)", color: DEEP_NAVY }}
                 >

@@ -11,6 +11,8 @@ const Homepage = () => {
   return (
     <div>
       {/* <Header/> */}
+
+    
       <Navbar/>
       <HeroSection/>
       <Animatedcard/>

@@ -21,6 +21,9 @@ const GOLD_END = "#c9943b";
 const DEEP_NAVY = "#082a48";
 const SURFACE = "#ffffff";
 
+const WHATSAPP_GREEN = "#25D366";
+const WHATSAPP_DARK = "#128C7E";
+
 export default function ContactSection() {
   const [formData, setFormData] = useState({
     name: "",
@@ -181,9 +184,8 @@ export default function ContactSection() {
                     type="text"
                     name="name"
                     placeholder="Jane Doe"
-                    className={`w-full p-3 rounded-lg border outline-none focus:ring-2 transition ${
-                      errors.name ? "border-red-300 focus:ring-red-400" : "border-gray-200"
-                    }`}
+                    className={`w-full p-3 rounded-lg border outline-none focus:ring-2 transition ${errors.name ? "border-red-300 focus:ring-red-400" : "border-gray-200"
+                      }`}
                     value={formData.name}
                     onChange={handleChange}
                     aria-invalid={!!errors.name}
@@ -204,10 +206,9 @@ export default function ContactSection() {
                     id="email"
                     type="email"
                     name="email"
-                    placeholder="you@example.com"
-                    className={`w-full p-3 rounded-lg border outline-none focus:ring-2 transition ${
-                      errors.email ? "border-red-300 focus:ring-red-400" : "border-gray-200"
-                    }`}
+                    placeholder="Enter your email address"
+                    className={`w-full p-3 rounded-lg border outline-none focus:ring-2 transition ${errors.email ? "border-red-300 focus:ring-red-400" : "border-gray-200"
+                      }`}
                     value={formData.email}
                     onChange={handleChange}
                     aria-invalid={!!errors.email}
@@ -228,9 +229,8 @@ export default function ContactSection() {
                     id="message"
                     name="message"
                     placeholder="How can we help?"
-                    className={`w-full p-3 rounded-lg min-h-[140px] border outline-none focus:ring-2 resize-y transition ${
-                      errors.message ? "border-red-300 focus:ring-red-400" : "border-gray-200"
-                    }`}
+                    className={`w-full p-3 rounded-lg min-h-[140px] border outline-none focus:ring-2 resize-y transition ${errors.message ? "border-red-300 focus:ring-red-400" : "border-gray-200"
+                      }`}
                     value={formData.message}
                     onChange={handleChange}
                     aria-invalid={!!errors.message}
@@ -245,9 +245,8 @@ export default function ContactSection() {
 
                 <button
                   type="submit"
-                  className={`w-full py-3 rounded-xl font-semibold text-white transition-all flex items-center justify-center gap-2 ${
-                    isSubmitting ? "bg-gray-300 cursor-not-allowed" : ""
-                  }`}
+                  className={`w-full py-3 rounded-xl font-semibold text-white transition-all flex items-center justify-center gap-2 ${isSubmitting ? "bg-gray-300 cursor-not-allowed" : ""
+                    }`}
                   disabled={isSubmitting}
                   aria-busy={isSubmitting}
                   style={{
@@ -305,7 +304,7 @@ export default function ContactSection() {
                 </a>
 
                 <a
-                  href="tel:+15169170756"
+                  href="tel:+13128639331"
                   className="inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 bg-white/8 border border-white/10 text-white hover:bg-white/12 transition"
                   aria-label="Call us"
                 >
@@ -315,17 +314,16 @@ export default function ContactSection() {
               </div>
 
               <a
-                href="https://api.whatsapp.com/send?phone=15165818909&text=Hello!"
+                href="https://api.whatsapp.com/send?phone=13128639331&text=Hello!"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 w-full inline-flex items-center justify-center gap-3 rounded-xl px-4 py-3 font-semibold"
+                className="mt-4 w-full inline-flex items-center justify-center gap-3 rounded-xl px-4 py-3 font-semibold text-white transition transform"
                 style={{
-                  background: `linear-gradient(90deg, ${GOLD_START}, ${GOLD_END})`,
-                  color: DEEP_NAVY,
-                  boxShadow: "0 10px 30px rgba(199,155,75,0.12)",
+                  background: `linear-gradient(135deg, ${WHATSAPP_GREEN}, ${WHATSAPP_DARK})`,
+                  boxShadow: "0 6px 20px rgba(37, 211, 102, 0.35)",
                 }}
               >
-                <FaWhatsapp className="w-5 h-5" />
+                <FaWhatsapp className="w-5 h-5 text-white" />
                 Message us on WhatsApp
               </a>
 
@@ -359,14 +357,14 @@ export default function ContactSection() {
                       <div className="font-medium text-sm" style={{ color: DEEP_NAVY }}>Hours</div>
                       <div className="text-sm text-gray-600">
                         Monday - Friday: 6 pm - 9 pm<br />
-                        Saturday, Sunday: By appointment (1 pm - 4 pm)
+                        Saturday & Sunday: Available throughout the day
                       </div>
                     </div>
                   </div>
 
-                  <div className="mt-4 flex items-center gap-2 text-sm text-gray-600">
+                  {/* <div className="mt-4 flex items-center gap-2 text-sm text-gray-600">
                     <MapPin size={16} /> <span>Mount Airy, MD</span>
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className="hidden sm:flex items-center">

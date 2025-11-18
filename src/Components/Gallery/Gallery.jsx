@@ -2,6 +2,10 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
+import img1 from "../../assets/images/img1.jpeg";
+import img2 from "../../assets/images/img2.jpeg";
+import img3 from "../../assets/images/img3.jpeg";
+import img4 from "../../assets/images/img4.jpeg";
 
 /* ---------- Firebase (unchanged) ---------- */
 const firebaseConfig = {
@@ -18,10 +22,8 @@ const db = getFirestore(app);
 /**
  * EventsGallery.Attractive.jsx
  *
- * - Eye-catching, modern layout emphasizing the latest gallery with a thumbnail rail.
- * - Uniform cards below with hover lift / tilt, badges, filters, and sticky CTAs.
- * - Uses GOLD + DEEP_NAVY theme (GOLD_START/GOLD_END/DEEP_NAVY).
- * - Preserves fetching, keyboard-friendly lightbox, and mobile responsiveness.
+ * Shows events from Firestore and injects a synthetic "Extras & Behind the Scenes"
+ * gallery card using local images imported above.
  */
 
 const GOLD_START = "#f7d88b";
@@ -29,12 +31,15 @@ const GOLD_END = "#c9943b";
 const DEEP_NAVY = "#082a48";
 const SURFACE = "#ffffff";
 
+// Use the imported image references (not strings)
+const EXTRA_IMAGES = [img1, img2, img3, img4];
+
 export default function EventsGalleryAttractive() {
   const [eventsData, setEventsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
 
-  const [filter, setFilter] = useState("All"); // All | Workshops | Webinars | Highlights | etc
+  const [filter, setFilter] = useState("All"); // All | Workshops | Webinars | Highlights | Extras | etc
   const [availableTags, setAvailableTags] = useState(["All"]);
   const [visibleIds, setVisibleIds] = useState(new Set());
 
@@ -52,20 +57,46 @@ export default function EventsGalleryAttractive() {
           id: Number.isNaN(parseInt(doc.id, 10)) ? doc.id : parseInt(doc.id, 10),
           ...doc.data(),
         }));
-        // sort ascending -> newest last
+
+        // sort ascending -> newest last (numeric ids first, fallback to string compare)
         events.sort((a, b) => {
           const an = typeof a.id === "number";
           const bn = typeof b.id === "number";
           if (an && bn) return a.id - b.id;
           return String(a.id).localeCompare(String(b.id));
         });
+
+        // Create the synthetic extras item (if we have images)
+        if (Array.isArray(EXTRA_IMAGES) && EXTRA_IMAGES.length > 0) {
+          const extrasItem = {
+            // stable string id so it doesn't collide with numeric ids
+            id: `extras-static`,
+            title: "Extras & Behind the Scenes",
+            subtitle: "Small collection of uncategorized photos",
+            description: "Unsorted shots and behind-the-scenes images.",
+            images: EXTRA_IMAGES.slice(), // use imported image references
+            date: new Date().toLocaleDateString(),
+            tag: "Extras",
+          };
+
+          // Ensure extras do NOT become the "latest" hero item:
+          // keep the real latest (if any) as the last element.
+          if (events.length > 0) {
+            const latestEvent = events.pop(); // remove true latest
+            events.push(extrasItem); // append extras among previous
+            events.push(latestEvent); // put the true latest back at the end
+          } else {
+            // no events from firestore — extras will be the only item (appears as latest)
+            events.push(extrasItem);
+          }
+        }
+
         setEventsData(events);
 
         // derive tags (normalize and unique)
         const tags = new Set(["All"]);
         events.forEach((e) => {
           if (e.tag) tags.add(String(e.tag));
-          // also add category-like fields if present
           if (e.category) tags.add(String(e.category));
         });
         setAvailableTags(Array.from(tags));
@@ -166,7 +197,7 @@ export default function EventsGalleryAttractive() {
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8">
         <div>
           <h2 className="text-3xl md:text-4xl font-extrabold" style={{ color: DEEP_NAVY }}>
-            Events Showcase
+            Gallery Showcase
           </h2>
           <p className="mt-2 text-black/60 max-w-xl">
             Latest gallery highlighted — browse previous galleries below. Use filters to find workshops, webinars and highlights quickly.
@@ -180,9 +211,7 @@ export default function EventsGalleryAttractive() {
                 key={t}
                 onClick={() => setFilter(t)}
                 className={`text-sm px-3 py-1.5 rounded-full font-medium transition ${
-                  filter === t
-                    ? "shadow-lg"
-                    : "border bg-white/60 hover:bg-white/80"
+                  filter === t ? "shadow-lg" : "border bg-white/60 hover:bg-white/80"
                 }`}
                 style={
                   filter === t

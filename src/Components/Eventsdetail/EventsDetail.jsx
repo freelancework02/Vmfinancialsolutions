@@ -61,7 +61,7 @@ const DEMO_PREVIOUS = [
     id: "prev-101",
     title: "Frontend Roadmap: Build with Confidence",
     date: "2025-10-22T18:00:00+05:30",
-    thumbnailUrl: "https://images.unsplash.com/photo-1529336953121-a9d1b95a0df1?q=80&w=800&auto=format&fit=crop",
+    thumbnailUrl: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1400&auto=format&fit=crop",
     recordingLink: "https://example.com/recording/frontend-roadmap",
   },
   {

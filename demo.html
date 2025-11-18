@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aawesh Manyar | Creative Web Developer</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Anime.js + GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <!-- Google fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Baloo+2:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --cream: #fff8ef;
+      --paper: #ffffff;
+      --accent-pink: #ff7da5;
+      --accent-yellow: #ffd76b;
+      --accent-blue: #7ac5ff;
+      --accent-purple: #c9a9ff;
+      --accent-green: #70d39b;
+      --ink: #2f2f2f;
+    }
+
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #ffe8f1 0, transparent 45%),
+                  radial-gradient(circle at top right, #e4f3ff 0, transparent 45%),
+                  radial-gradient(circle at bottom left, #e7ffe9 0, transparent 45%),
+                  #f8f5ff;
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* big resume board */
+    .resume-board {
+      background: var(--paper);
+      border-radius: 32px;
+      box-shadow:
+        0 18px 40px rgba(48, 34, 70, 0.15),
+        0 0 0 6px rgba(255, 255, 255, 0.9);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* torn paper edge at top */
+    .torn-header {
+      position: relative;
+      background: linear-gradient(135deg, #fef1e0, #ffe0ec);
+    }
+    .torn-header::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -18px;
+      height: 36px;
+      background-image: radial-gradient(circle at 10px -6px, transparent 18px, #ffffff 19px);
+      background-size: 40px 40px;
+    }
+
+    .sticker {
+      position: absolute;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #2f2f2f;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+      transform: rotate(-4deg);
+    }
+
+    .sticker-blue {
+      background: #e5f2ff;
+    }
+
+    .sticker-yellow {
+      background: #fff1c8;
+    }
+
+    .sticker-pink {
+      background: #ffe3ef;
+    }
+
+    /* polaroid style photo card */
+    .polaroid {
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 14px 32px rgba(20, 12, 37, 0.18);
+      position: relative;
+      padding: 10px 10px 18px;
+    }
+
+    .polaroid::before {
+      content: "";
+      position: absolute;
+      top: -18px;
+      left: 22px;
+      width: 54px;
+      height: 26px;
+      border-radius: 999px;
+      background: #111827;
+      box-shadow: 0 6px 0 rgba(0, 0, 0, 0.28);
+      transform: rotate(-6deg);
+    }
+
+    .polaroid-tag {
+      font-family: "Baloo 2", system-ui;
+      font-size: 16px;
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* cute section labels */
+    .section-label {
+      font-family: "Baloo 2", system-ui;
+      font-size: 24px;
+      letter-spacing: 0.02em;
+    }
+
+    .note-card {
+      border-radius: 18px;
+      box-shadow: 0 10px 24px rgba(17, 24, 39, 0.12);
+      background: #fffef8;
+      position: relative;
+    }
+
+    .note-card::before {
+      content: "";
+      position: absolute;
+      top: -12px;
+      left: 18px;
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: #f97373;
+      box-shadow: 0 4px 0 rgba(148, 27, 27, 0.7);
+      transform: rotate(-8deg);
+    }
+
+    .note-card-blue {
+      background: #f0f6ff;
+    }
+
+    .note-card-yellow {
+      background: #fff8dd;
+    }
+
+    .note-card-pink {
+      background: #ffeef6;
+    }
+
+    .note-card-purple {
+      background: #f4ecff;
+    }
+
+    .mini-pill {
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .software-pill {
+      width: 70px;
+      height: 70px;
+      border-radius: 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      color: white;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .bar-bg {
+      border-radius: 999px;
+      overflow: hidden;
+      background: #f3f4f6;
+    }
+
+    .bar-fill {
+      height: 10px;
+      border-radius: 999px;
+    }
+
+    .pin-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      box-shadow: 0 0 0 2px #111827;
+    }
+
+    @media (max-width: 768px) {
+      .resume-board {
+        border-radius: 24px;
+      }
+      .sticker {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body class="py-6 px-3 md:py-10 md:px-6">
+  <main class="max-w-6xl mx-auto resume-board">
+
+    <!-- floating stickers -->
+    <div class="sticker sticker-blue top-6 left-10">💻 Clean Code</div>
+    <div class="sticker sticker-yellow top-10 right-10 rotate-3">✨ Modern Retro</div>
+    <div class="sticker sticker-pink bottom-8 left-12 rotate-3">🚀 Freelance Web Dev</div>
+
+    <!-- header -->
+    <header class="torn-header px-6 md:px-10 pt-6 pb-10 md:pb-14">
+      <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-center md:items-end">
+        <!-- name / intro -->
+        <div class="flex-1">
+          <h1 class="section-label text-3xl md:text-4xl text-slate-900 mb-2">
+            Aawesh Manyar
+          </h1>
+          <p class="inline-flex items-center rounded-full bg-white/80 px-4 py-2 text-sm font-semibold shadow">
+            <span class="mr-2 text-lg">🎨</span> Freelance Web Developer
+          </p>
+          <p class="mt-4 text-sm md:text-base text-slate-800 max-w-xl">
+            I'm a freelance web developer with <strong>2 months of hands-on experience</strong>
+            building responsive, aesthetic websites. I love mixing a modern dev stack with playful
+            retro-inspired design — clean layouts, smooth animations, and bold colors.
+          </p>
+          <div class="mt-5 flex flex-wrap gap-3 text-xs">
+            <span class="mini-pill bg-yellow-200/80 text-yellow-900">HTML • CSS • JS</span>
+            <span class="mini-pill bg-blue-200/80 text-blue-900">Tailwind</span>
+            <span class="mini-pill bg-pink-200/80 text-pink-900">Anime.js &amp; GSAP</span>
+            <span class="mini-pill bg-emerald-200/80 text-emerald-900">Responsive Design</span>
+          </div>
+        </div>
+
+        <!-- polaroid photo -->
+        <div class="w-44 md:w-56 polaroid rotate-2">
+          <div class="rounded-xl overflow-hidden h-48 md:h-60 bg-slate-100">
+            <!-- simple cartoon-style avatar -->
+            <svg viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+              <defs>
+                <linearGradient id="bggrad" x1="0" x2="1">
+                  <stop offset="0" stop-color="#ffe1ed" />
+                  <stop offset="1" stop-color="#e6f3ff" />
+                </linearGradient>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#bggrad)" />
+              <g transform="translate(35,30)">
+                <ellipse cx="95" cy="105" rx="70" ry="85" fill="#ffe7cc" />
+                <path d="M25 80 Q95 10 165 80 Q150 10 95 5 Q35 10 25 80" fill="#3f3d56" />
+                <circle cx="72" cy="100" r="10" fill="#1f1f1f" />
+                <circle cx="120" cy="100" r="10" fill="#1f1f1f" />
+                <path d="M70 132 Q95 148 120 132" stroke="#b36f56" stroke-width="4" fill="none" stroke-linecap="round" />
+                <path d="M52 96 h18 M110 96 h18" stroke="#1f1f1f" stroke-width="3" />
+                <rect x="50" y="92" width="24" height="18" rx="6" fill="none" stroke="#1f1f1f" stroke-width="3" />
+                <rect x="112" y="92" width="24" height="18" rx="6" fill="none" stroke="#1f1f1f" stroke-width="3" />
+              </g>
+            </svg>
+          </div>
+          <p class="polaroid-tag">
+            Aawesh • Web Dev
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <!-- body sections -->
+    <section class="px-6 md:px-10 pb-10 md:pb-12 pt-6 grid grid-cols-1 lg:grid-cols-[1.1fr,1fr] gap-8 lg:gap-10">
+
+      <!-- left column: about, experience, education -->
+      <div class="space-y-6">
+
+        <!-- about me -->
+        <div class="note-card note-card-yellow p-5 md:p-6 card-section">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="pin-dot bg-yellow-400"></div>
+            <h2 class="section-label text-xl md:text-2xl">About Me</h2>
+          </div>
+          <p class="text-sm md:text-[15px] leading-relaxed">
+            I build websites that feel friendly and alive —
+            smooth transitions, clear typography, and layouts that work on all devices.
+            In the last <strong>2 months</strong> of freelancing, I’ve focused on:
+          </p>
+          <ul class="mt-3 text-sm space-y-1.5">
+            <li>• Designing landing pages and mini-portfolios for individuals and small brands.</li>
+            <li>• Turning rough ideas into clean, responsive layouts with Tailwind CSS.</li>
+            <li>• Adding subtle motion with GSAP and anime.js to guide user attention.</li>
+          </ul>
+        </div>
+
+        <!-- experience -->
+        <div class="note-card note-card-blue p-5 md:p-6 card-section">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="pin-dot bg-blue-400"></div>
+            <h2 class="section-label text-xl md:text-2xl">Experience</h2>
+          </div>
+          <div class="space-y-3 text-sm">
+            <div class="flex gap-3">
+              <div class="mt-1 text-lg">📌</div>
+              <div>
+                <p class="font-semibold">Freelance Web Developer</p>
+                <p class="text-xs text-slate-600 mb-1">Remote • 2025 — Present</p>
+                <ul class="list-disc list-inside space-y-1">
+                  <li>Built small business one-page sites with fast load and simple admin updates.</li>
+                  <li>Implemented responsive design systems and component-based layouts.</li>
+                  <li>Created retro-style visuals and micro animations for hero sections and CTAs.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- education -->
+        <div class="note-card note-card-pink p-5 md:p-6 card-section">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="pin-dot bg-pink-400"></div>
+            <h2 class="section-label text-xl md:text-2xl">Education</h2>
+          </div>
+          <div class="space-y-3 text-sm">
+            <div class="flex gap-3">
+              <div class="mt-1 text-lg">🎓</div>
+              <div>
+                <p class="font-semibold">Self-taught Web Development</p>
+                <p class="text-xs text-slate-600">2024 — Present</p>
+                <p class="mt-1">
+                  Learning modern HTML, CSS, JavaScript and UI basics from tutorials,
+                  documentation and lots of practice projects.
+                </p>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <div class="mt-1 text-lg">📚</div>
+              <div>
+                <p class="font-semibold">Project-based Learning</p>
+                <p class="text-xs text-slate-600">Personal Mini Projects</p>
+                <p class="mt-1">
+                  Cloning dribbble shots, building landing pages and experimenting with animation libraries
+                  to sharpen real-world skills.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- right column: contact, skills, software -->
+      <div class="space-y-6">
+
+        <!-- contact -->
+        <div class="note-card note-card-purple p-5 md:p-6 card-section">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="pin-dot bg-purple-400"></div>
+            <h2 class="section-label text-xl md:text-2xl">Contact</h2>
+          </div>
+          <div class="space-y-3 text-sm">
+            <div class="flex items-center gap-3">
+              <span class="text-lg">📍</span>
+              <span>India • Open to remote work</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-lg">✉️</span>
+              <span>aawesh@example.com</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-lg">🌐</span>
+              <span>Portfolio site (this page)</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-lg">📱</span>
+              <span>+91-00000-00000</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- skills with bars -->
+        <div class="note-card note-card-yellow p-5 md:p-6 card-section">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="pin-dot bg-emerald-400"></div>
+            <h2 class="section-label text-xl md:text-2xl">Skills</h2>
+          </div>
+          <div class="space-y-3 text-sm">
+            <div>
+              <div class="flex justify-between mb-1">
+                <span>HTML / CSS</span><span class="text-xs text-slate-600">90%</span>
+              </div>
+              <div class="bar-bg">
+                <div class="bar-fill bg-gradient-to-r from-orange-400 to-amber-500 w-[90%] skill-bar"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1">
+                <span>Tailwind CSS</span><span class="text-xs text-slate-600">85%</span>
+              </div>
+              <div class="bar-bg">
+                <div class="bar-fill bg-gradient-to-r from-sky-400 to-blue-500 w-[85%] skill-bar"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1">
+                <span>JavaScript</span><span class="text-xs text-slate-600">75%</span>
+              </div>
+              <div class="bar-bg">
+                <div class="bar-fill bg-gradient-to-r from-emerald-400 to-teal-500 w-[75%] skill-bar"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1">
+                <span>GSAP / anime.js</span><span class="text-xs text-slate-600">70%</span>
+              </div>
+              <div class="bar-bg">
+                <div class="bar-fill bg-gradient-to-r from-fuchsia-400 to-purple-500 w-[70%] skill-bar"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- software / tools -->
+        <div class="note-card note-card-blue p-5 md:p-6 card-section">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="pin-dot bg-blue-400"></div>
+            <h2 class="section-label text-xl md:text-2xl">Software &amp; Stack</h2>
+          </div>
+          <div class="grid grid-cols-3 gap-4 text-xs">
+            <div class="software-pill bg-gradient-to-br from-orange-400 to-orange-600">
+              <span>HT</span><span class="text-[10px] mt-0.5">HTML</span>
+            </div>
+            <div class="software-pill bg-gradient-to-br from-sky-400 to-blue-600">
+              <span>TW</span><span class="text-[10px] mt-0.5">Tailwind</span>
+            </div>
+            <div class="software-pill bg-gradient-to-br from-yellow-400 to-amber-600">
+              <span>JS</span><span class="text-[10px] mt-0.5">JavaScript</span>
+            </div>
+            <div class="software-pill bg-gradient-to-br from-purple-400 to-purple-700">
+              <span>GS</span><span class="text-[10px] mt-0.5">GSAP</span>
+            </div>
+            <div class="software-pill bg-gradient-to-br from-pink-400 to-fuchsia-600">
+              <span>AN</span><span class="text-[10px] mt-0.5">anime.js</span>
+            </div>
+            <div class="software-pill bg-gradient-to-br from-emerald-400 to-teal-600">
+              <span>GH</span><span class="text-[10px] mt-0.5">GitHub</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- project strip (bottom like a little portfolio preview) -->
+    <section class="px-6 md:px-10 pb-8">
+      <div class="note-card note-card-pink p-4 md:p-5 flex flex-col md:flex-row gap-4 md:gap-6 card-section">
+        <div class="flex items-center gap-3 mb-1 md:mb-0">
+          <div class="pin-dot bg-pink-400"></div>
+          <h2 class="section-label text-lg md:text-xl">Sample Projects</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs md:text-sm flex-1">
+          <div class="bg-white/70 rounded-xl p-3 flex gap-3 items-start shadow-sm">
+            <div class="text-lg">🧷</div>
+            <div>
+              <p class="font-semibold">Retro One-Pager</p>
+              <p class="text-slate-600 text-xs">Scrolling landing page with 90s style stickers and smooth scroll.</p>
+            </div>
+          </div>
+          <div class="bg-white/70 rounded-xl p-3 flex gap-3 items-start shadow-sm">
+            <div class="text-lg">🪄</div>
+            <div>
+              <p class="font-semibold">Animated Hero</p>
+              <p class="text-slate-600 text-xs">Hero sections with GSAP timelines and responsive layout.</p>
+            </div>
+          </div>
+          <div class="bg-white/70 rounded-xl p-3 flex gap-3 items-start shadow-sm">
+            <div class="text-lg">📁</div>
+            <div>
+              <p class="font-semibold">Mini Portfolio</p>
+              <p class="text-slate-600 text-xs">Multi-section personal portfolio similar to this layout.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- footer -->
+    <footer class="px-6 md:px-10 pb-6 text-xs md:text-sm text-slate-500 flex justify-between items-center">
+      <span>© <span id="year"></span> Aawesh Manyar</span>
+      <span>Crafted with 💛 &amp; modern retro vibes</span>
+    </footer>
+  </main>
+
+  <script>
+    // Set year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // GSAP intro animations
+    document.addEventListener("DOMContentLoaded", () => {
+      gsap.from(".section-label", {
+        y: 20,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.08,
+        ease: "power2.out",
+      });
+
+      gsap.from(".polaroid", {
+        y: 30,
+        opacity: 0,
+        duration: 0.9,
+        delay: 0.2,
+        ease: "power3.out",
+      });
+
+      gsap.from(".card-section", {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.12,
+        delay: 0.4,
+        ease: "power2.out",
+      });
+
+      gsap.from(".sticker", {
+        y: -18,
+        opacity: 0,
+        duration: 0.9,
+        stagger: 0.15,
+        ease: "back.out(1.7)",
+      });
+    });
+
+    // anime.js wiggle for stickers
+    anime({
+      targets: ".sticker",
+      translateY: [-2, 2],
+      direction: "alternate",
+      easing: "easeInOutSine",
+      duration: 2200,
+      loop: true,
+    });
+
+    // skill bar animation (fill from 0 to width)
+    const bars = document.querySelectorAll(".skill-bar");
+    bars.forEach((bar) => {
+      const finalWidth = bar.style.width;
+      bar.style.width = "0";
+      anime({
+        targets: bar,
+        width: finalWidth,
+        duration: 1500,
+        delay: 400,
+        easing: "easeOutQuad",
+      });
+    });
+  </script>
+</body>
+</html>
