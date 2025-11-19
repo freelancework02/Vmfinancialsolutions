@@ -34,9 +34,9 @@ const GRADIENT = `linear-gradient(135deg, ${ACCENT_START}, ${ACCENT_END})`;
 const DEMO_EVENT = {
   title: "Design Systems & DX — Practical Deep Dive",
   date: "2025-11-24T18:30:00+05:30",
-  host: "We Plan Future · Jack Patel",
+  host: "vm financial solutions · Vaibhav Maddiwar",
   description:
-    `<p>Join Jack Patel for a hands-on session exploring design systems that scale, accessibility patterns, and practical developer experience improvements you can adopt right away.</p>
+    `<p>Join Vaibhav Maddiwar for a hands-on session exploring design systems that scale, accessibility patterns, and practical developer experience improvements you can adopt right away.</p>
      <ul>
        <li>Short talk: design tokens & theming</li>
        <li>Live demo: building a small component library</li>

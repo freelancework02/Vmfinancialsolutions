@@ -137,7 +137,7 @@ export default function AboutUsFounder({ founderImage, founderName = "Vaibhav Ma
                       Founder
                     </div>
                     <div className="mt-1 text-lg font-bold" style={{ color: DEEP_NAVY }}>{founderName}</div>
-                    <div className="text-sm text-black/60 mt-1">(License Number – 21322826)</div>
+                    <div className="text-sm text-black/60 mt-1">(License Number – 21017650)</div>
                   </div>
                 </div>
 
