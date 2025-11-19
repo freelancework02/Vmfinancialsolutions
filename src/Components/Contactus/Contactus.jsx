@@ -69,13 +69,12 @@ export default function ContactSection() {
       message: formData.message,
     };
 
-    emailjs
-      .send(
-        "service_o49f57q",
-        "template_zueof2i",
-        templateParams,
-        "_NCXgVXdplNNFVAvR"
-      )
+  emailjs.send(
+  "service_clfjpui",
+  "template_329vuuu",
+  templateParams,
+  "CVKrczuvBFE0HOIOy"
+)
       .then(
         () => {
           toast.success("🎉 Thanks — your message has been sent.");
