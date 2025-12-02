@@ -156,7 +156,7 @@ export default function BlogDetailVariantA() {
                 Back to Blogs
               </button>
 
-              <button
+              {/* <button
                 onClick={() =>
                   window.open(blog.meetingLink || "#", "_blank", "noopener,noreferrer")
                 }
@@ -169,7 +169,7 @@ export default function BlogDetailVariantA() {
                 aria-disabled={!blog.meetingLink}
               >
                 {blog.meetingLink ? "Join Meeting" : "No meeting link"}
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
