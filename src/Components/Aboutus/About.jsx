@@ -22,6 +22,7 @@ import React from "react";
  *
  * Save as AboutUs.FounderFirst.jsx and import where needed.
  */
+import { Link } from "react-router-dom";
 
 const GOLD_START = "#f7d88b";
 const GOLD_END = "#c9943b";
@@ -32,14 +33,14 @@ export default function AboutUsFounder({ founderImage, founderName = "Vaibhav Ma
   return (
     <section
       aria-labelledby="about-heading"
-      className="relative mt-16 py-12 md:py-16 px-4 sm:px-6 lg:px-12"
+      className="relative mt-20  py-12 md:py-16 px-4 sm:px-6 lg:px-12"
       style={{ background: "linear-gradient(180deg,#ffffff 0%, #fffaf6 36%, #ffffff 100%)" }}
     >
     
         {/* Header */}
         <div className="text-center md:text-left mb-8 md:mb-12">
           <span
-            className="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold"
+            className="inline-flex items-center mb-6 px-3 py-1 rounded-full text-sm font-semibold"
             style={{ background: `linear-gradient(90deg, ${GOLD_START}, ${GOLD_END})`, color: DEEP_NAVY }}
           >
             ABOUT US
@@ -100,13 +101,13 @@ export default function AboutUsFounder({ founderImage, founderName = "Vaibhav Ma
                 >
                   Book a review
                 </a>
-                <a
-                  href="/service"
+                <Link
+                  to="/service"
                   className="inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 border"
                   style={{ borderColor: "rgba(8,42,72,0.06)", color: DEEP_NAVY }}
                 >
                   Our services
-                </a>
+                </Link>
               </div>
             </div>
           </div>

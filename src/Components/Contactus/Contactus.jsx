@@ -2,9 +2,11 @@
 import React, { useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { Mail, Phone, Calendar, ShieldCheck, MapPin } from "lucide-react";
-import emailjs from "emailjs-com";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
 
 /**
  * ContactSection.GoldDeep.jsx
@@ -28,6 +30,7 @@ export default function ContactSection() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone:"",
     message: "",
     company: "", // honeypot
   });
@@ -47,6 +50,11 @@ export default function ContactSection() {
     if (!formData.message || formData.message.trim().length < 12) {
       newErrors.message = "Tell us a bit more (at least 12 characters).";
     }
+
+    if (!formData.phone || formData.phone.replace(/\D/g, "").length < 10) {
+  newErrors.phone = "Please enter a valid phone number.";
+}
+
     if (formData.company && formData.company.trim().length > 0) {
       newErrors.company = "Spam detected.";
     }
@@ -58,36 +66,53 @@ export default function ContactSection() {
   const handleChange = (e) =>
     setFormData((s) => ({ ...s, [e.target.name]: e.target.value }));
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!validateForm()) return;
 
-    setIsSubmitting(true);
-    const templateParams = {
-      from_name: formData.name,
-      email: formData.email,
-      message: formData.message,
-    };
+  setIsSubmitting(true);
 
-  emailjs.send(
-  "service_clfjpui",
-  "template_329vuuu",
-  templateParams,
-  "CVKrczuvBFE0HOIOy"
-)
-      .then(
-        () => {
-          toast.success("🎉 Thanks — your message has been sent.");
-          setFormData({ name: "", email: "", message: "", company: "" });
-          setErrors({});
-        },
-        (error) => {
-          console.error(error);
-          toast.error("❌ Could not send your message. Please try again.");
-        }
-      )
-      .finally(() => setIsSubmitting(false));
-  };
+  try {
+    const res = await fetch(
+      "http://localhost:3000/api/contact/contact",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim(),
+          msg: formData.message.trim(),
+        }),
+      }
+    );
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || "Failed to send message");
+    }
+
+    toast.success("🎉 Thanks — your message has been sent.");
+
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+      company: "",
+    });
+
+    setErrors({});
+  } catch (err) {
+    console.error(err);
+    toast.error("❌ Could not send your message. Please try again.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
+
 
   return (
     <section
@@ -219,6 +244,45 @@ export default function ContactSection() {
                     </p>
                   )}
                 </div>
+
+                {/* PHONE */}
+<div>
+  <label
+    htmlFor="phone"
+    className="block text-sm font-semibold text-slate-800 mb-1.5"
+  >
+    Phone Number
+  </label>
+
+  <PhoneInput
+    country={"in"}                 // default INDIA
+    onlyCountries={["in", "us", "ca"]}
+    preferredCountries={["in", "us", "ca"]}
+    value={formData.phone}
+    onChange={(phone) =>
+      setFormData((s) => ({ ...s, phone }))
+    }
+    inputProps={{
+      name: "phone",
+      required: true,
+    }}
+    inputStyle={{
+      width: "100%",
+      height: "48px",
+      borderRadius: "0.5rem",
+      borderColor: errors.phone ? "#fca5a5" : "#cbd5e1",
+    }}
+    buttonStyle={{
+      borderRadius: "0.5rem 0 0 0.5rem",
+    }}
+    containerClass="react-tel-input"
+  />
+
+  {errors.phone && (
+    <p className="text-red-600 text-sm mt-1">{errors.phone}</p>
+  )}
+</div>
+
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-semibold text-gray-800 mb-1.5">

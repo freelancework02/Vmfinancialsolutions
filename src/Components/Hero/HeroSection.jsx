@@ -1,5 +1,7 @@
 // HeroImageEnhanced.jsx
 import React, { useRef } from "react";
+import { Link } from "react-router-dom";
+
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import heroImg from "../../assets/Herosec.png"; // keep your image path
 
@@ -68,9 +70,9 @@ export default function HeroImageEnhanced({ onBook = () => {} }) {
                       Book an Appointment
                     </button>
 
-                    <a href="/service" className="inline-flex items-center self-center text-sm font-medium text-slate-700 ml-1">
+                    <Link to="/service" className="inline-flex items-center self-center text-sm font-medium text-slate-700 ml-1">
                       Learn more
-                    </a>
+                    </Link>
                   </div>
 
                   {/* stats ribbon */}

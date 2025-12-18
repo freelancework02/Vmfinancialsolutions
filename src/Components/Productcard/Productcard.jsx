@@ -123,6 +123,7 @@ export default function ProductcardGoldVariantModern() {
   return (
     <section
       aria-labelledby="products-modern"
+      className="mt-10"
       style={{
         marginTop: 64,
         paddingTop: 64,
