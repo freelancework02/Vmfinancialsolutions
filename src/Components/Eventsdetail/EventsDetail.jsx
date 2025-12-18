@@ -150,6 +150,12 @@ export default function EventsDetailModern({ eventId: propEventId = null }) {
           id: baseCurrent.id,
           title: baseCurrent.title,
           date: dateValue,
+           event_timezone:
+    detailEvent?.event_timezone ||
+    baseCurrent?.event_timezone ||
+    detailEvent?.timezone ||
+    baseCurrent?.timezone ||
+    "EST",
           host:
             baseCurrent.hosted_by ||
             detailEvent?.hosted_by ||
@@ -325,6 +331,12 @@ export default function EventsDetailModern({ eventId: propEventId = null }) {
                 >
                   <FiCalendar />{" "}
                   <span className="leading-none">{formattedDate}</span>
+                  {model.event_timezone && (
+  <span className="text-white">
+    {model.event_timezone}
+  </span>
+)}
+
                 </div>
 
                 <h1 className="mt-2 text-lg md:text-xl font-extrabold text-gray-900 truncate">
@@ -361,7 +373,7 @@ export default function EventsDetailModern({ eventId: propEventId = null }) {
                   </button>
                 )}
 
-                <div className="text-xs text-gray-500">~90 mins</div>
+              
               </div>
             </div>
           </article>
@@ -443,10 +455,20 @@ export default function EventsDetailModern({ eventId: propEventId = null }) {
           >
             <h4 className="font-semibold text-gray-900">Event details</h4>
             <ul className="mt-3 space-y-3 text-sm text-gray-700">
-              <li>
-                <div className="font-medium">When</div>
-                <div className="text-gray-500">{formattedDate}</div>
-              </li>
+            <li>
+  <div className="font-medium">When</div>
+
+  <div className="flex items-center gap-2 text-gray-500">
+    <span>{formattedDate}</span>
+
+    {model.event_timezone && (
+      <span className="text-black/70">
+        ( {model.event_timezone} )
+      </span>
+    )}
+  </div>
+</li>
+
               <li>
                 <div className="font-medium">Host</div>
                 <div className="text-gray-500">{model.host}</div>
